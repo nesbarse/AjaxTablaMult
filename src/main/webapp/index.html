@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!--<script src="http://code.jquery.com/jquery-latest.js"></script>-->
+        <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <script src="vendor/jquery/jquery-3.1.0.min.js" type="text/javascript"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                $("#btnTab").click(function (e) {
+                    
+                    var dates = $('#tab').serialize();
+                    $.ajax({
+                        url: "/AjaxTablaMult/TablaMult",
+                        type: "GET",
+                        dataType: "json",
+                        success: function (source) {
+//                    $("#data").append("<p>" + source['id'] + " " + source['nombre'] + "</p><hr/>");
+                            var alto = 5;
+                            var ancho = 10;
+                            var res = '';
+//                    var holamundo = "<div class=\"container\"><row><strong>Tabla de multiplicar</strong></row>";
+
+//                    holamundo += "<row><div class=\"col-md-12\">"
+//                    holamundo += "<table class=\"table table-bordered\">";
+
+                            for (i = 1; i <= alto; i++) {
+//                        holamundo += "<tr>";
+                                res+='<tr>';
+                                for (j = 1; j <= ancho; j++) {
+                                    res+='<td>';
+                                    res+=source.tab[i];
+                                    res+='</td>';
+//                            holamundo += "<td>";                            
+//                            holamundo += z;
+//                            holamundo += "</td>";
+                                }
+//                        holamundo += "</tr>"
+                                res+='</tr>';
+                            }
+                            $('#tab').empty().append(res);
+//                    holamundo += "</table></div></row></div>";
+                        },
+                        error: function (dato) {
+                            $("#data").append("ERROR en la recepción de datos de clientes");
+                        }
+                    });
+                }
+                )
+            });
+
+
+        </script>
+
+        
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <strong>Tabla de multiplicar</strong>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="tab" class="table table-bordered">
+
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <input id="btnTab" type="button" value="TablaMult" name="tablam" />
+            </div>
+        </div>
+    </body>
+</html>
